@@ -1,0 +1,316 @@
+login -------
+
+@section Style {
+    <!-- Bootstrap core CSS-->
+    <!-- Custom styles for this template-->
+    @*<link href="asset('custom_public/css/sb-admin.css')" rel="stylesheet">*@
+    @Styles.Render("~/Content/custom_content/css/sb-admin.css")
+}
+
+<h2>Login Index Full</h2>
+
+<div class="container">
+    <div class="card card-login mx-auto mt-5 pt-md-2">
+        <div class="card-header"><strong>Login</strong></div>
+        <div class="card-body">
+            <form method="post" action="/login" id="login">
+                <div class="form-group">
+                    <label for="usernameEmail">Username / Email address</label>
+                    <input class="form-control" id="usernameEmail" type="text" aria-describedby="emailHelp" placeholder="Enter username / email" name="usernameEmail" value="{{old('usernameEmail')}}">
+                    @if (Session["userDNE"] != null)
+                    {
+                        <small id="userDNE" class="text-danger">@Session["userDNE"]</small>
+                    }
+                    <small id="usernameEmailHelp" class="text-danger"></small>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input class="form-control" id="password" type="password" placeholder="Enter Password" name="password">
+                    @if (Session["pwdERR"] != null)
+                    {
+                        <small id="pwdERR" class="text-danger">@Session["pwdERR"]</small>
+                    }
+                    <small id="passwordHelp" class="text-danger"></small>
+                </div>
+                <input class="btn btn-primary btn-block" type="submit" value="Login" />
+                <!--<a class="btn btn-primary btn-block" href="index.html">Login</a>-->
+            </form>
+            <div class="text-center">
+                <a class="d-block small mt-3" href="/register">Register an Account</a>
+                <a class="d-block small" href="/Forget">Forgot Password?</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- Bootstrap core JavaScript-->
+    <!-- Core plugin JavaScript-->
+    @Scripts.Render("~/Scripts/custom_scripts/vendor/jquery-easing/jquery.easing.min.js")
+    @* <script src="asset('custom_public/vendor/jquery-easing/jquery.easing.min.js')"></script> *@
+
+    <!-- Custom plugin JavaScript-->
+    @Scripts.Render("~/Scripts/custom_scripts/login-validate.js")
+    @* <script src="asset('custom_public/login-validate.js')"></script> *@
+
+    <script type="text/javascript">
+
+        alert("login: hello mzs");
+
+        body {
+            //background: url(custom_content/images/login.jpeg) no - repeat 0px 0px;
+            background: url("@Url.Content("~/custom_content/images/login.jpeg")") no - repeat 0px 0px;
+            background - size: cover;
+            font - family: "Roboto", sans - serif;
+        }
+
+        setTimeout(function () {
+            $('.mzs-alert-div').fadeOut('slow'); //fast
+        }, 5000);
+    </script>
+}
+
+--- Register
+
+@section Style {
+    <!-- Bootstrap core CSS-->
+    <!-- Custom styles for this template-->
+    @*<link href="asset('custom_public/css/sb-admin.css')" rel="stylesheet">*@
+    @Styles.Render("~/Content/custom_content/css/sb-admin.css")
+}
+
+<h2>Register Index</h2>
+
+<div class="container">
+    <div class="card card-register mx-auto mt-5 pt-md-2">
+        <div class="card-header"><strong>Register an Account</strong></div>
+        <div class="card-body">
+            <form method="post" action="/register" enctype="multipart/form-data" id="register">
+                <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <label for="username">Username</label>
+                            <input class="form-control" id="username" type="text" aria-describedby="nameHelp" placeholder="Enter Username" name="username" value="{{old('username')}}">
+                            @if (Session["userEXT"] != null)
+                            {
+                                <small id="userEXT" class="text-danger">(Session["userEXT"]</small>
+                            }
+                            <small id="usernameHelp" class="text-danger"></small>
+                        </div>
+                        <div class="col-md-6 mt-3">
+                            <label for="firstname">First name</label>
+                            <input class="form-control" id="firstname" type="text" aria-describedby="nameHelp" placeholder="Enter first name" name="firstname" value="{{old('firstname')}}">
+                            <small id="firstnameHelp" class="text-danger"></small>
+                        </div>
+                        <div class="col-md-6 mt-3">
+                            <label for="lastname">Last name</label>
+                            <input class="form-control" id="lastname" type="text" aria-describedby="nameHelp" placeholder="Enter last name" name="lastname" value="{{old('lastname')}}">
+                            <small id="lastnameHelp" class="text-danger"></small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <label for="gender">Gender:</label>
+                            <select class="form-control" id="gender" name="gender">
+                                <option value="Session[" userGender"]">Session["userGender"]</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="DOB">Date of Birth</label>
+                            <input class="form-control" id="DOB" type="date" placeholder="Your Birth Date" name="DOB" value="{{old('DOB')}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <label for="email">Email address</label>
+                            <input class="form-control" id="email" type="email" aria-describedby="emailHelp" placeholder="Enter email" name="email" value="{{old('email')}}">
+                            @if (Session["emailEXT"] != null)
+                            {
+                                <small id="emailEXT" class="text-danger">Session["emailEXT"]</small>
+                            }
+                            <small id="emailHelp" class="text-danger"></small>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="pnumber">Phone Number</label>
+                            <input class="form-control" id="pnumber" type="text" aria-describedby="phoneHelp" placeholder="Enter phone number" name="pnumber" value="{{old('pnumber')}}">
+                            <small id="pnumberHelp" class="text-danger"></small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <label for="password">Password</label>
+                            <input class="form-control" id="password" type="password" placeholder="Password" name="password">
+                            <small id="passwordHelp" class="text-danger"></small>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="cpassword">Confirm password</label>
+                            <input class="form-control" id="cpassword" type="password" placeholder="Confirm password" name="cpassword">
+                            <small id="cpasswordHelp" class="text-danger"></small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <label for="address">Address</label>
+                            <input class="form-control" id="address" type="text" placeholder="i.e: House# 7, Road No# 1, Block# B, Niketon" name="address" value="{{old('address')}}">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="profilepic">Profile Pic</label>
+                            <input class="form-control" id="profilepic" type="file" name="profilepic">
+                        </div>
+                        <small id="profilepicHelp" class="text-danger"></small>
+                    </div>
+                </div>
+                <!--<a class="btn btn-primary btn-block" href="/registration">Register</a>-->
+                <input type="hidden" name="acctype" value="User" />
+                <input class="btn btn-primary btn-block" type="submit" value="Register" />
+            </form>
+            <div class="text-center">
+                <a class="d-block small mt-3" href="/login">Login Page</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- Bootstrap core JavaScript-->
+    <!-- Core plugin JavaScript-->
+    @Scripts.Render("~/Scripts/custom_scripts/vendor/jquery-easing/jquery.easing.min.js")
+    @* <script src="asset('custom_public/vendor/jquery-easing/jquery.easing.min.js')"></script> *@
+
+    <!-- Custom plugin JavaScript-->
+    @Scripts.Render("~/Scripts/custom_scripts/register-validate.js")
+    @* <script src="asset('custom_public/login-validate.js')"></script> *@
+
+    <script type="text/javascript">
+
+        alert("Register: hello mzs");
+
+        setTimeout(function () {
+            $('.mzs-alert-div').fadeOut('slow'); //fast
+        }, 5000);
+    </script>
+}
+
+---------------------- index2-login from Logreg Login2
+
+//CommonMethods my_methods = new CommonMethods();
+
+            if (Session["usertype"] != null)
+            {
+                IsLogged();
+                /*if (Session["usertype"].ToString() == "Admin")
+                {
+                    return Redirect("/Admin");
+                }
+                else if (Session["usertype"].ToString() == "User")
+                {
+                    return Redirect("/User");
+                }
+                else
+                {
+                    return Redirect("/Index");
+                }*/
+
+            }
+            else if (Session["username"] == null)
+            {
+                //Response.Redirect("~/log1.aspx");
+                return Redirect("/Login");
+            }
+            else if (Request["password"] == null)
+            {
+                //Response.Redirect("~/log2.aspx");
+                return Redirect("/Login");
+                
+            }
+            else if (Request["password"] == "")
+            {
+                TempData["usrerr_msg"] = "Access Denied. Please Enter password!";
+                //ScriptManager.RegisterStartupScript(this, this.GetType(), "message", "alert('Access Denied. Please Enter password!');location.href = 'log2.aspx';", true);
+                //Response.Redirect(Request.UrlReferrer.ToString());
+                return Redirect(Request.UrlReferrer.ToString());
+            }
+            else
+            {
+                string username = Session["username"].ToString();
+                string password = Request["password"];
+
+                if (Session["password_err"] == null)
+                {
+                    Session["password_err"] = 0;
+                }
+
+                //string hashpassword = CommonMethods.HashPassword(password);
+
+                //if (my_methods.Login(username, hashpassword) == true)
+                if (DB.Login(username, password) == true)
+                {
+                    //my_methods.PageStats("total_logged");
+
+                    if (Request["remember"] != null)
+                    {
+                        Session["remember"] = Request["remember"];
+                        //DB.SetCookie(username, password);
+                        //DB.SetCookie(username, hashpassword);
+                        //my_methods.SetCookie(username, password);
+                    }
+                    else
+                    {
+                        Session["remember"] = "Not remembered";
+                    }
+
+                    if ((Session["usertype"].ToString() == "admin") || (Session["usertype"].ToString() == "Admin"))
+                    {
+                        //Response.Redirect("~/admin.aspx");
+                        return Redirect("/Admin");
+                    }
+                    else if ((Session["usertype"].ToString() == "user") || (Session["usertype"].ToString() == "User"))
+                    {
+                        Response.Redirect("/User");
+                    }
+                }
+                else
+                {
+                    int counter = Convert.ToInt32(Session["password_err"]);
+                    Session["password_err"] = ++counter;
+
+                    if (counter >= 3)
+                    {
+                        //ScriptManager.RegisterStartupScript(this, this.GetType(), "message", "alert('Seems like you Forget your Password! Please Retrieve your password 1st!');location.href = 'frgt.aspx';", true);
+                    }
+                    else
+                    {
+                        //ScriptManager.RegisterStartupScript(this, this.GetType(), "message", "alert('Error! Wrong Password!');location.href = 'log2.aspx';", true);
+                    }
+                }
+            }
+
+
+            //AJAX
+            /*$.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                url: "/User/AddToCart",
+                method: "get",
+                data: JSON.stringify(arrayCart),
+                success: function (res) {
+
+                    console.log("res cart session:");
+                    console.log(res);
+                    //window.location = "http://google.com";
+                    //window.location = "/cartlist";    
+                }
+
+            });/*
