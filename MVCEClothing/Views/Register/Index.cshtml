@@ -1,0 +1,128 @@
+﻿
+@{
+    /**/
+
+    ViewBag.Title = "Index";
+}
+
+@section Style {
+    <!-- Bootstrap core CSS-->
+    <!-- Custom styles for this template-->
+    @*<link href="asset('custom_public/css/sb-admin.css')" rel="stylesheet">*@
+    @Styles.Render("~/Content/custom_content/css/sb-admin.css")
+}
+
+<div class="container">
+    <div class="card card-register mx-auto mt-5 pt-md-2">
+        <div class="card-header"><strong>Register an Account</strong></div>
+        <div class="card-body">
+            <form method="post" action="/Register/Index2" enctype="multipart/form-data" id="register">
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <label for="username">Username</label>
+                            <input class="form-control" id="username" type="text" aria-describedby="nameHelp" placeholder="Enter Username" name="username" value="@(Session["r_username"])">
+                            @if (Session["userEXT"] != null)
+                            {
+                                <small id="userEXT" class="text-danger">@Session["userEXT"]</small>
+                            }
+                            <small id="usernameHelp" class="text-danger"></small>
+                        </div>
+                        <div class="col-md-6 mt-3">
+                            <label for="firstname">First name</label>
+                            <input class="form-control" id="firstname" type="text" aria-describedby="nameHelp" placeholder="Enter first name" name="firstname" value="@(Session["r_firstname"])">
+                            <small id="firstnameHelp" class="text-danger"></small>
+                        </div>
+                        <div class="col-md-6 mt-3">
+                            <label for="lastname">Last name</label>
+                            <input class="form-control" id="lastname" type="text" aria-describedby="nameHelp" placeholder="Enter last name" name="lastname" value="@(Session["r_lastname"])">
+                            <small id="lastnameHelp" class="text-danger"></small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <label for="gender">Gender:</label>
+                            <select class="form-control" id="gender" name="gender">
+                                <option value="@(Session["r_gender"])">@(Session["r_gender"])</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="DOB">Date of Birth</label>
+                            <input class="form-control" id="DOB" type="date" placeholder="Your Birth Date" name="DOB" value="">
+                        </div>
+                    </div>
+                </div>
+
+                <!--<a class="btn btn-primary btn-block" href="/registration">Register</a>-->
+                <!--<input type="hidden" name="usertype" value="User" />-->
+                <input class="btn btn-primary btn-block" type="submit" value="Next" />
+            </form>
+            <div class="text-center">
+                <a class="d-block small mt-3" href="/Login">Login Page</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- Bootstrap core JavaScript-->
+    <!-- Core plugin JavaScript-->
+    @Scripts.Render("~/Scripts/custom_scripts/vendor/jquery-easing/jquery.easing.min.js")
+    @* <script src="asset('custom_public/vendor/jquery-easing/jquery.easing.min.js')"></script> *@
+
+    <!-- Custom plugin JavaScript-->
+    @Scripts.Render("~/Scripts/custom_scripts/register-validate.js")
+    @* <script src="asset('custom_public/login-validate.js')"></script> *@
+
+    @if (TempData["usrerr_msg"] != null)
+    {
+        <script type="text/javascript">
+              alert( "@(TempData["usrerr_msg"])");
+        </script>
+    }
+
+    @if (TempData["pwderr_msg"] != null)
+    {
+        if (TempData["pwderr_msg"].ToString() != "")
+        {
+            <script type="text/javascript">
+                  alert( "@(TempData["pwderr_msg"])");
+            </script>
+        }
+    }
+
+    @if (TempData["regerr_msg"] != null)
+    {
+        if (TempData["regerr_msg"].ToString() != "")
+        {
+            <script type="text/javascript">
+                  alert( "@(TempData["regerr_msg"])");
+            </script>
+        }
+    }
+
+    @if (TempData["msg"] != null)
+    {
+        if (TempData["msg"].ToString() != "")
+        {
+            <script type="text/javascript">
+                  alert( "@(TempData["msg"])");
+            </script>
+        }
+    }
+
+    <script type="text/javascript">
+
+        //alert("Register: hello mzs");
+
+        setTimeout(function () {
+            $('.mzs-alert-div').fadeOut('slow'); //fast
+        }, 5000);
+    </script>
+}
+

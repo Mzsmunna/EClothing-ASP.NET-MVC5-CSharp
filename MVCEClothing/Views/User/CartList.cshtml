@@ -1,0 +1,182 @@
+﻿
+@{
+    ViewBag.Title = "CartList";
+}
+
+@section Style {
+    <!-- Bootstrap core CSS-->
+    <!-- Custom styles for this template-->
+    @*<link href="asset('custom_public/css/sb-admin.css')" rel="stylesheet">*@
+    @Styles.Render("~/Content/custom_content/css/sb-admin.css")
+}
+
+<div class="container">
+    <div class="card card-register mx-auto mt-5 pt-md-2" style="max-width: 100%;">
+        <div class="card-header"><strong>Cart List Items</strong></div>
+        <div class="card-body">
+            @* @if ($allCartItems) *@
+            <form method="post" action="/User/Checkout" enctype="multipart/form-data" id="checkout">
+                <input type="hidden" name="_token" id="csrf" value="<?php echo csrf_token(); ?>">
+                <input type="hidden" name="newQuantity" id="newQuantity" value="" />
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Product Name</th>
+                                        <th>Size</th>
+                                        <th>Quantiy</th>
+                                        <th>Price / unit</th>
+                                        <th>Total Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @*
+                                        $i=1;
+                                        $nettotal=0;
+                                        @endphp
+                                        @foreach ($allCartItems as $Item)
+
+                                        if(($Item["currency"]=="Rupee")||($Item["currency"]=="RS."))
+                                        {
+                                        $nettotal += $Item["total"]*1.5;
+                                        }else if(($Item["currency"]=="Taka")||($Item["currency"]=="TK."))
+                                        {
+                                        $nettotal += $Item["total"];
+                                        }else if($Item["currency"]=="$")
+                                        {
+                                        $nettotal += $Item["total"]*82.71;
+                                        }else if($Item["currency"]=="Euro")
+                                        {
+                                        $nettotal += $Item["total"]*94.91;
+                                            }
+                                    *@
+                                    <tr id="i">
+                                        <input type="hidden" name="pid" value="Item[" pid"]" />
+                                        <input type="hidden" name="price" value="Item[" price"]" />
+                                        <input type="hidden" name="currency" value="Item[" currency"]" />
+                                        <input type="hidden" name="squantity" value="Item[" quantity"]" />
+                                        <input type="hidden" name="quantityFor" value="Item[" quantityFor"]" />
+                                        <td>@* echo $i++; *@ </td>
+                                        <td>Item["pname"]</td>
+                                        <td>Item["quantityFor"]</td>
+                                        @* @if (Item["quantityFor"] == "XS") *@
+                                        <td><input type="number" name="quantity" min="1" max="Item[" available"]" value="Item[" quantity"]"></td>
+                                        @* @else if (Item["quantityFor"] == "S") *@
+                                        <td><input type="number" name="quantity" min="1" max="Item[" vailable"]" value="Item[" quantity"]"></td>
+                                        @* @else if (Item["quantityFor"] == "M") *@
+                                        <td><input type="number" name="quantity" min="1" max="Item[" available"]" value="Item[" quantity"]"></td>
+                                        @* @else if (Item["quantityFor"] == "L") *@
+                                        <td><input type="number" name="quantity" min="1" max="Item[" available"]" value="Item[" quantity"]"></td>
+                                        @* @else if (Item["quantityFor"] == "XL") *@
+                                        <td><input type="number" name="quantity" min="1" max="Item[" available"]" value="Item[" quantity"]"></td>
+                                        @* @else if (Item["quantityFor"] == "XXL") *@
+                                        <td><input type="number" name="quantity" min="1" max="Item[" available"]" value="Item[" quantity"]"></td>
+                                        @* } *@
+                                        <td>Item["price"] Item["currency"]</td>
+                                        <td class="price">Item["total"] $Item["currency"]</td>
+                                    </tr>
+                                    @* } *@
+                                </tbody>
+                            </table>
+                            <input type="hidden" name="totalprice" value="nettotal" />
+                            <input type="hidden" name="pid" value="Item[" pid"]" />
+                            <select class="pull-right ml-2" id="cng_currency" name="cng_currency">
+                                <option value="Taka"> Taka</option>
+                                <option value="$"> $</option>
+                                <option value="Rupee"> Rupee</option>
+                                <option value="Euro"> Euro</option>
+                            </select>
+                            <span class="pull-right text-danger" id="totalprice"><strong> Over all Price : nettotal </span></strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-4">
+                            <label for="purchasemethod">Purchase Method :</label>
+                            <select class="form-control" id="purchasemethod" name="purchasemethod">
+                                <option value="Home Delivary">Home Delivary</option>
+                                <option value="Bikash">Bikash</option>
+                                <option value="Rocket">Rocket</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="pnumber">Phone Number</label>
+                            @if (Session["phone"] != null)
+                            {
+                                <input class="form-control" id="pnumber" type="text" aria-describedby="phoneHelp" placeholder="Enter phone number" name="pnumber" value="{{ Session::get('phone')}}" required>
+                            }
+                            else
+                            {
+                                <input class="form-control" id="pnumber" type="text" aria-describedby="phoneHelp" placeholder="Enter phone number" name="pnumber" required>
+                            }
+                            <small id="pnumberHelp" class="text-danger" value="<%= pnumber %>"></small>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="address">Address</label>
+                            @if (Session["address"] != null)
+                            {
+                                <input class="form-control" id="address" type="text" placeholder="i.e: House# 7, Road No# 1, Block# B, Niketon" name="address" value="{{ Session::get('address')}}" required>
+                            }
+                            else
+                            {
+                                <input class="form-control" id="address" type="text" placeholder="i.e: House# 7, Road No# 1, Block# B, Niketon" name="address" required>
+                            }
+                            <small id="addressHelp" class="text-danger" value="<%= address %>"></small>
+                        </div>
+                    </div>
+                </div>
+                <!--<a class="btn btn-primary btn-block" href="/registration">Register</a>-->
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="btn-group col-md-12">
+                            <a class="btn btn-danger col-md-6" href="/">Cancel</a>
+                            <input class="btn btn-primary col-md-6" type="submit" value="Check Out" />
+                            @* <button type="button" class="btn btn-primary col-md-6" id="checkout">Check Out</button> *@
+                        </div>
+                    </div>
+                </div>
+            </form>
+            @* } *@
+            <div class="jumbotron">
+                <img class="rounded mx-auto d-block" src="custom_public/images/emptycart.png" alt=""><h1 class="text-center text-muted"> <strong>Cart is Empty!!</strong> </h1>
+            </div>
+            @* } *@
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- Bootstrap core JavaScript-->
+    <!-- Core plugin JavaScript-->
+    @Scripts.Render("~/Scripts/custom_scripts/vendor/jquery-easing/jquery.easing.min.js")
+    @* <script src="asset('custom_public/vendor/jquery-easing/jquery.easing.min.js')"></script> *@
+
+    <!-- Custom plugin JavaScript-->
+    @Scripts.Render("~/Scripts/custom_scripts/cartlist.js")
+    @* <script src="asset('custom_public/login-validate.js')"></script> *@
+
+    @if (TempData["msg"] != null)
+    {
+        if (TempData["msg"].ToString() != "")
+        {
+            <script type="text/javascript">
+                  alert( "@(TempData["msg"])");
+            </script>
+        }
+    }
+
+    <script type="text/javascript">
+
+        //alert("Cartlist: hello mzs");
+
+        setTimeout(function () {
+            $('.mzs-alert-div').fadeOut('slow'); //fast
+        }, 5000);
+    </script>
+}
+
+

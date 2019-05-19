@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewBag.Title = "Index2";
+}
+
+@section Style {
+    <!-- Bootstrap core CSS-->
+    <!-- Custom styles for this template-->
+    @*<link href="asset('custom_public/css/sb-admin.css')" rel="stylesheet">*@
+    @Styles.Render("~/Content/custom_content/css/sb-admin.css")
+}
+
+<div class="container">
+    <div class="card card-login mx-auto mt-5 pt-md-2">
+        <div class="card-header"><strong>Login as @Session["username"]</strong></div>
+        <div class="card-body">
+            <form method="post" action="/Login/Logged" id="login">
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input class="form-control" id="password" type="password" placeholder="Enter Password" name="password">
+                    @if (Session["pwdERR"] != null)
+                    {
+                        <small id="pwdERR" class="text-danger">@Session["pwdERR"]</small>
+                    }
+                    <small id="passwordHelp" class="text-danger"></small>
+                </div>
+                <input class="btn btn-primary btn-block" type="submit" value="Login" />
+                <input type="checkbox" name="remember" value="remembered" /> Remember Me <br>
+                <!--<a class="btn btn-primary btn-block" href="index.html">Login</a>-->
+            </form>
+            <div class="text-center">
+                <a class="d-block small mt-3" href="/register">Register an Account</a>
+                <a class="d-block small" href="/Forget">Forgot Password?</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- Bootstrap core JavaScript-->
+    <!-- Core plugin JavaScript-->
+    @Scripts.Render("~/Scripts/custom_scripts/vendor/jquery-easing/jquery.easing.min.js")
+    @* <script src="asset('custom_public/vendor/jquery-easing/jquery.easing.min.js')"></script> *@
+
+    <!-- Custom plugin JavaScript-->
+    @Scripts.Render("~/Scripts/custom_scripts/login-validate.js")
+    @* <script src="asset('custom_public/login-validate.js')"></script> *@
+
+    @if (TempData["pwderr_msg"] != null)
+    {
+        if (TempData["pwderr_msg"].ToString() != "")
+        {
+            <script type="text/javascript">
+                  alert( "@(TempData["pwderr_msg"])");
+            </script>
+        }
+    }
+
+    @if (TempData["msg"] != null)
+    {
+        if (TempData["msg"].ToString() != "")
+        {
+            <script type="text/javascript">
+                  alert( "@(TempData["msg"])");
+            </script>
+        }
+    }
+
+    <script type="text/javascript">
+
+        //alert("login2: hello mzs");
+
+        setTimeout(function () {
+            $('.mzs-alert-div').fadeOut('slow'); //fast
+        }, 5000);
+    </script>
+}

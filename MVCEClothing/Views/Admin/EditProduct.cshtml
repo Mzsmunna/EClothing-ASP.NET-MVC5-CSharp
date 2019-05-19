@@ -1,0 +1,145 @@
+﻿
+@{
+    ViewBag.Title = "EditProduct";
+}
+
+<div class="container">
+    <div class="card card-register mx-auto mt-5 pt-md-2">
+        <div class="card-header"><strong>Edit Product : @ViewBag.PID</strong></div>
+        <div class="card-body">
+            <form method="post" action="/Admin/ProductUpdate/@ViewBag.PID" enctype="multipart/form-data" id="add-update-product">
+                <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <label for="pname">Product Name:</label>
+                            <input class="form-control" id="pname" type="text" aria-describedby="nameHelp" placeholder="Enter Poduct name" name="pname" value="@Session["edit_pname"]">
+                            @if (Session["itemEXT"] != null)
+                            {
+                                <small id="itemEXT" class="text-danger">@Session["itemEXT"]</small>
+                            }
+                            <small id="pnameHelp" class="text-danger"></small>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="size">Size:</label>
+                            <div class="form-control" id="size">
+                                <input type="checkbox" name="XS" value="XS"> XS
+                                <input type="checkbox" name="S" value="S"> S
+                                <input type="checkbox" name="M" value="M"> M
+                                <input type="checkbox" name="L" value="L"> L
+                                <input type="checkbox" name="XL" value="XL"> XL
+                                <input type="checkbox" name="XXL" value="XXL"> XXL
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="available">Product Quantity:</label>
+                            <input class="form-control" id="available" type="number" aria-describedby="nameHelp" placeholder="Enter Quantity" name="available" min="1" value="@Session["edit_available"]">
+                            <small id="availableHelp" class="text-danger"></small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-4">
+                            <label for="pfor">Product For:</label>
+                            <select class="form-control" id="pfor" name="pfor">
+                                <option value="@Session["edit_pfor"]">@Session["edit_pfor"]</option>
+                                <option value="Men">Men</option>
+                                <option value="Women">Women</option>
+                                <option value="Child">Child</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="category">Available Category :</label>
+                            <select class="form-control" id="category" name="category">
+                                <option value="@Session["edit_category"]">@Session["edit_category"]</option>
+                                <option value="T-Shirt">T-Shirt</option>
+                                <option value="Shirt">Shirt</option>
+                                <option value="Panjabi">Panjabi</option>
+                                <option value="Shari">Shari</option>
+                                <option value="Kurti">Kurti</option>
+                                <option value="Jeans">Jeans</option>
+                                <option value="Salwar">Salwar</option>
+                                <option value="Blezzer">Blezzer</option>
+                                <option value="Jacket">Jacket</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="currency">Currency:</label>
+                            <select class="form-control" id="currency" name="currency">
+                                <option value="@Session["edit_currency"]">@Session["edit_currency"]</option>
+                                <option value="Taka">Taka</option>
+                                <option value="$">$</option>
+                                <option value="Euro">Euro</option>
+                                <option value="Rupee">Rupee</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-4">
+                            <label for="price">Product Price:</label>
+                            <input class="form-control" id="price" type="number" aria-describedby="nameHelp" placeholder="in number" name="price" min="0" value="@Session["edit_price"]">
+                            <small id="priceHelp" class="text-danger"></small>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="cost">Manufecture Cost:</label>
+                            <input class="form-control" id="cost" type="number" aria-describedby="nameHelp" placeholder="in number" name="cost" min="0" value="@Session["edit_cost"]">
+                            <small id="costHelp" class="text-danger"></small>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="offer">Offer:</label>
+                            <input class="form-control" id="offer" type="number" aria-describedby="nameHelp" placeholder="in %" name="offer" min="0" value="@Session["edit_offer"]">
+                            <small id="offerHelp" class="text-danger"></small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <!--<div class="col-md-6">
+                            <label for="productpics">Upload Pic:</label>
+                            <input class="form-control" id="productpics" type="file" multiple="multiple" name="productpics[]">
+                        </div>-->
+                    </div>
+                    <small id="productpicsHelp" class="text-danger"></small>
+                </div>
+                <!--<a class="btn btn-primary btn-block" href="/registration">Register</a>-->
+                <input class="btn btn-primary btn-block" type="submit" value="Update Product" />
+            </form>
+            <div class="text-center">
+                <a class="d-block small mt-3" href="/Admin">Go back to Admin Page</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- Bootstrap core JavaScript-->
+    <!-- Core plugin JavaScript-->
+    @Scripts.Render("~/Scripts/custom_scripts/vendor/jquery-easing/jquery.easing.min.js")
+    @* <script src="asset('custom_public/vendor/jquery-easing/jquery.easing.min.js')"></script> *@
+
+    <!-- Custom plugin JavaScript-->
+    @*@Scripts.Render("~/Scripts/custom_scripts/product-validate.js")*@
+    @* <script src="asset('custom_public/login-validate.js')"></script> *@
+
+    @if (TempData["msg"] != null)
+    {
+        if (TempData["msg"].ToString() != "")
+        {
+            <script type="text/javascript">
+                  alert( "@(TempData["msg"])");
+            </script>
+        }
+    }
+
+    <script type="text/javascript">
+
+        //alert("Add Product: hello mzs");
+
+        setTimeout(function () {
+            $('.mzs-alert-div').fadeOut('slow'); //fast
+        }, 5000);
+    </script>
+}

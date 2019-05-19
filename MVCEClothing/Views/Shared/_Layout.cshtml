@@ -1,0 +1,168 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" , shrink-to-fit=no">
+    <title>@ViewBag.Title - EClothing</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    @* @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr") *@
+    <!-- By Mzs-->
+    <!-- Bootstrap core CSS -->
+    @Styles.Render("~/Content/custom_content/vendor/bootstrap/css/bootstrap.min.css")
+    @* <link href="@Url.Content("~/Content/custom_content/vendor/bootstrap/css/bootstrap.min.css")" rel="stylesheet" type="text/css" /> *@
+
+    <!-- Custom fonts for this template-->
+    @Styles.Render("~/Content/custom_content/vendor/font-awesome/css/font-awesome.min.css")
+    <!-- <link href="~/Content/custom_public/vendor/bootstrap/css/font-awesome.min.css" rel="stylesheet" type="text/css" /> -->
+    <!-- Custom styles for this template -->
+    @*@Styles.Render("~/Content/custom_content/css/modern-business.css") *@
+    <!-- <link href="~/Content/custom_public/vendor/bootstrap/css/modern-business.css" rel="stylesheet" type="text/css" /> -->
+
+    @RenderSection("style", required: false)
+    <!--Bye Mzs-->
+</head>
+<body>
+    @if (Session["message"] != null) {
+    <div class="alert alert-success text-center mzs-alert" role="alert">
+        <strong>Session["message"]</strong>
+    </div>
+    }
+    @if (Session["loginReq"] != null) {
+    <div class="alert alert-danger text-center mzs-alert" role="alert">
+        <strong>Session["loginReq"]</strong>
+    </div>
+    }
+    <!-- Navigation by Mzs-->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/Index"> EClothing </a>
+            <a class="nav-link" href="/User/CartList" id="carticon">
+                <i class="fa fa-shopping-cart shopping-cart" style="font-size:24px;color:white"></i>
+                <span class="text-white" id="cartitem"></span>
+            </a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <!--<li class="nav-item">
+                        <form class="form-inline my-2 my-lg-0 mr-lg-2">
+                            <div class="input-group">
+                                <input class="form-control" type="text" placeholder="Type to Search..." id="nam" />
+                            </div>
+                        </form>
+                    </li>-->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Clothes & Dresses
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+                            <a class="dropdown-item" href="/User">All Clothings</a>
+                            <a class="dropdown-item" href="/User/MensClothing">Men's Clothing</a>
+                            <a class="dropdown-item" href="/User/WomensClothing">Women's Clothing</a>
+                            <a class="dropdown-item" href="/User/ChildsClothing">Child's Clothing</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                    @if (Session["usertype"] != null)
+                    {
+                        if (Session["usertype"].ToString().Equals("Admin")) {
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Admin"> @Session["username"]</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Logout">logout</a>
+                            </li>
+                        }
+                        else if (Session["usertype"].ToString().Equals("User"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="/User/MyProfile">@Session["username"]</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Logout">logout</a>
+                            </li>
+                        }
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login">login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/register">Register</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Navigation bye Mzs-->
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+
+        <hr />
+        @* <footer>
+                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            </footer> *@
+    </div>
+
+    <footer class="py-5 bg-dark">
+        <div id="footer">
+            <div class="container">
+                <p class="m-0 text-center text-white">Copyright &copy; EClothing.com 2019</p>
+            </div>
+        </div>
+        <!-- /.container -->
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    <!-- Bootstrap core JavaScript -->
+    @Scripts.Render("~/Scripts/custom_scripts/vendor/jquery/jquery.min.js")
+    @* <script src="asset('custom_public/vendor/jquery/jquery.min.js')"></script> *@
+
+    @Scripts.Render("~/Scripts/custom_scripts/vendor/bootstrap/js/bootstrap.bundle.min.js")
+    @* <script src="asset('custom_public/vendor/bootstrap/js/bootstrap.bundle.min.js')"></script> *@
+
+    @RenderSection("scripts", required: false)
+
+    @* @Scripts.Render("~/Content/custom_script/addtocart.js") *@
+    @* <script src="asset('custom_public/addtocart.js')"></script> *@
+
+    <script type="text/javascript">
+
+        //alert("hello mzs");
+        setTimeout(function () {
+            $('.mzs-alert').fadeOut('slow'); //fast
+        }, 5000);
+    </script>
+</body>
+</html>

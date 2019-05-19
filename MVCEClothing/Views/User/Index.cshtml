@@ -1,0 +1,178 @@
+﻿@model List<MVCEClothing.Models.Product>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<!-- Page Content -->
+<div class="container">
+    <!-- <input type="hidden" name="title" value="All Products" /> -->
+    <!-- Page Heading/Breadcrumbs -->
+    <h1 class="mt-4 mb-3">
+        @ViewBag.ProductFor
+        <small>Items</small>
+    </h1>
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/Index">Home</a>
+        </li>
+        <li class="breadcrumb-item active">@ViewBag.ProductFor</li>
+    </ol>
+
+
+    <div class="row">
+        @foreach (var product in Model)
+        {
+            if (product.Available > 0)
+            {
+                <div class="col-lg-4 col-sm-6 portfolio-item" id="@product.Pid">
+                    <input type="hidden" name="pid" value="@product.Pid" />
+                    <input type="hidden" name="pname" value="@product.Itemname" />
+                    <input type="hidden" name="pfor" value="@product.Itemfor" />
+                    <input type="hidden" name="category" value="@product.Category" />
+                    <input type="hidden" name="size" value="@product.Sizes" />
+                    <input type="hidden" name="available" value="@product.Available" />
+
+                    @if ((product.Offer <= 0))
+                    {
+                        <input type="hidden" name="price" value="@product.Price" />
+                    }
+                    else
+                    {
+                        var discount = (product.Price * product.Offer) / 100;
+                        var newprice = product.Price - discount;
+                        <input type="hidden" name="price" value="@newprice" />
+                    }
+                    <input type="hidden" name="cost" value="@product.Cost" />
+                    <input type="hidden" name="currency" value="@product.Currency" />
+                    <input type="hidden" name="offer" value="@product.Offer" />
+                    <div class="card h-100 item">
+                        <a href="/User/ClothDetails/@product.Pid"><img class="card-img-top" src="~/Content/cucustom_content/uploads/products/product->pname/images/product->pname0.jpg" onerror="this.src = '../../Content/custom_content/images/products.jpg'" alt=""></a>
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <a href="/User/ClothDetails/@product.Pid">@product.Itemname</a>
+                            </h4>
+
+                            @if (product.Offer <= 0)
+                            {
+                                <h5>@product.Price @product.Currency</h5>
+                            }
+                            else
+                            {
+                                var discount = (product.Price * product.Offer) / 100;
+                                var newprice = product.Price - discount;
+                                <h5><strike>@product.Price @product.Currency</strike> <span class="ml-1">@newprice @product.Currency</span><span class="pull-right text-danger">@product.Offer % off</span></h5>
+                            }
+
+                            <p class="card-text">
+                                <strong>Product For : @product.Itemfor </strong> <br>
+                                <strong>Product Category :  @product.Category </strong> <br>
+                                <strong>Product sizes :  @product.Sizes </strong> <br>
+                            </p>
+
+                        </div>
+
+                        @if (Session["usertype"] != null)
+                        {
+                            if (Session["usertype"].ToString() == "User")
+                            {
+                                <div class="card-footer">
+                                    <button type="button" class="btn btn-success btn-sm mzs-atc">Add to Cart</button>
+
+                                    <select class="allsizes" name="allsizes">
+                                        <option value="Size">Size</option>
+                                        <option value="XS">XS</option>
+                                        <option value="S">S</option>
+                                        <option value="M">M</option>
+                                        <option value="L">L</option>
+                                        <option value="XL">XL</option>
+                                        <option value="XXL">XXL</option>
+                                    </select>
+
+                                    <input class="quantity" type="number" name="quantity" min="1" max="@product.Available" value="1">
+
+                                    @* <button type="button" class="btn btn-light pull-right text-danger love" data-toggle="tooltip" data-placement="bottom" title="Add to favourite"><i class="fa fa-heart-o mzs-atf" style="font-size:24px"></i></button> *@
+
+                                    @* <i class="fa fa-heart" style="font-size:24px"></i> *@
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+
+    <!-- Pagination -->
+    <ul class="pagination justify-content-center">
+        <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+            </a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#">1</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#">2</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#">3</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+            </a>
+        </li>
+    </ul>
+
+</div>
+<!-- /.container -->
+
+@section Scripts {
+    <!-- Bootstrap core JavaScript-->
+    <!-- Core plugin JavaScript-->
+    @Scripts.Render("~/Scripts/custom_scripts/vendor/jquery-easing/jquery.easing.min.js")
+    @* <script src="asset('custom_public/vendor/jquery-easing/jquery.easing.min.js')"></script> *@
+
+    <!-- Custom plugin JavaScript-->
+
+    @Scripts.Render("~/Scripts/custom_scripts/addtocart.js")
+    @* <script src="asset('custom_public/addtocart.js')"></script> *@
+
+    @Scripts.Render("~/Scripts/custom_scripts/search.js")
+    @* <script src="asset('custom_public/search.js')"></script> *@
+
+    @if (TempData["usr_msg"] != null)
+    {
+        if (TempData["usr_msg"].ToString() != "")
+        {
+            <script type="text/javascript">
+                  alert( "@(TempData["usr_msg"])");
+            </script>
+        }
+    }
+
+    @if (TempData["msg"] != null)
+    {
+        if (TempData["msg"].ToString() != "")
+        {
+            <script type="text/javascript">
+                  alert( "@(TempData["msg"])");
+            </script>
+        }
+    }
+
+    <script type="text/javascript">
+
+        //alert("User Product view: hello mzs");
+
+        setTimeout(function () {
+            $('.mzs-alert-div').fadeOut('slow'); //fast
+        }, 5000);
+    </script>
+}

@@ -1,0 +1,188 @@
+﻿@model MVCEClothing.Models.Product
+
+@{
+    ViewBag.Title = "ClothDetails";
+}
+
+<h2>ClothDetails</h2>
+
+<!-- Page Content -->
+<div class="container">
+
+    <!-- Page Heading/Breadcrumbs -->
+    <h1 class="mt-4 mb-3">
+        @Model.Itemfor's Cloth Item :
+        <small>@Model.Itemname</small>
+    </h1>
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/">Home</a>
+        </li>
+        <li class="breadcrumb-item active">@Model.Itemfor's Clothing | Cloth Item -> @Model.Itemname</li>
+    </ol>
+
+    <!-- Portfolio Item Row -- Product details and description -->
+    <div class="row">
+
+        <div class="col-md-8">
+            <img class="img-fluid" src="../custom_public/uploads/products/product->pname}}/images/product->pname0.jpg" onerror="this.src = '../../Content/custom_content/images/products.jpg'" alt="">
+        </div>
+
+        <div class="col-md-4" id="@Model.Pid">
+            <h3 class="my-3">@Model.Itemname Details</h3>
+            <input type="hidden" name="pid" value="@Model.Pid" />
+            <input type="hidden" name="pname" value="@Model.Itemname" />
+            <input type="hidden" name="pfor" value="@Model.Itemfor" />
+            <input type="hidden" name="category" value="@Model.Category" />
+            <input type="hidden" name="size" value="@Model.Sizes" />
+            <input type="hidden" name="available" value="@Model.Available" />
+            @if (Model.Offer == 0)
+            {
+                <input type="hidden" name="price" value="@Model.Price" />
+            }
+            else
+            {
+                var discount = Model.Price * Model.Offer / 100;
+                var newprice = Model.Price - discount;
+                <input type="hidden" name="price" value="@newprice" />
+            }
+            <input type="hidden" name="cost" value="@Model.Cost" />
+            <input type="hidden" name="currency" value="@Model.Currency" />
+            <input type="hidden" name="offer" value="@Model.Offer" />
+            @if (Model.Offer == 0)
+            {
+                <h5>@Model.Price @Model.Currency</h5>
+            }
+            else
+            {
+                var discount = Model.Price * Model.Offer / 100;
+                var newprice = Model.Price - discount;
+                <h5><strike>@Model.Price @Model.Currency</strike> <span class="ml-1">@newprice @Model.Currency</span><span class="pull-right text-danger">@Model.Offer% off</span></h5>
+            }
+            @if (Model.Available <= 0)
+            {
+                <h5 class="text-danger pull-right">OUT OF STOCK</h5>
+            }
+            <p class="card-text">
+                <strong> Product For : @Model.Itemfor </strong></br>
+                <strong> Product Category :  @Model.Category </strong></br>
+                <strong> Product Price :  @Model.Price @Model.Currency </strong></br>
+                <strong> Product Sizes :  @Model.Sizes </strong>
+            </p>
+            @if (Session["usertype"] != null)
+            {
+                if (Session["usertype"].ToString() == "User")
+                {
+                    <div class="card-footer">
+                        <form action="/User/PurchaseProduct/@Model.Pid" method="post" id="delete-product">
+                            <!--<button type="button" class="btn btn-success btn-lg mzs-atc">Add to Cart</button>-->
+                            <strong> Select Sizes :</strong><select class="form-control" name="allsizes">
+                                <option value="XS">XS</option>
+                                <option value="S">S</option>
+                                <option value="M">M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
+                                <option value="XXL">XXL</option>
+                            </select>
+                            <strong> Select Quantity :</strong><input class="quantity form-control" type="number" name="quantity" min="1" max="@Model.Available" value="1">
+                            <strong> Purchase Method :</strong><select class="form-control" name="pmethod">
+                                <option value="XS">Home Delivary</option>
+                                <option value="S">Bikash</option>
+                                <option value="M">Rocket</option>
+                                <option value="L">Nogod</option>
+                                <option value="XL">Paypal</option>
+                                <option value="XXL">Others</option>
+                            </select>
+                            <strong> Address :</strong><input class="form-control" id="address" type="text" placeholder="i.e: House# 7, Road No# 1, Block# B, Niketon" name="address" required>
+                            <strong> Phone Number :</strong><input class="form-control" id="pnumber" type="text" aria-describedby="phoneHelp" placeholder="Enter phone number" name="pnumber" required>
+                            <input type="hidden" name="pid" value="@Model.Pid" />
+                            <input class="mt-2 btn btn-danger btn-lg btn-block" type="submit" value="Purchase" />
+                            <!--<a class="mt-2 btn btn-danger btn-lg btn-block" href="/cartlist" role="button">Check Out</a>-->
+                        </form>
+                        @* <button type="button" class="btn btn-light pull-right text-danger love" data-toggle="tooltip" data-placement="bottom" title="Add to favourite"><i class="fa fa-heart-o mzs-atf" style="font-size:24px"></i></button> *@
+
+                        @* <i class="fa fa-heart" style="font-size:24px"></i> *@
+                    </div>
+                }
+            }
+
+
+        </div>
+    </div>
+
+</div>
+<!-- /.row -->
+<!-- Related Projects Row -->
+<h3 class="my-4">More Images</h3>
+
+<div class="row">
+
+    <div class="col-md-3 col-sm-6 mb-4">
+        <a href="#">
+            <img class="img-fluid" src="../custom_public/uploads/products/{product->pname}}/images/product->pname1.jpg" onerror="this.src = '../../Content/custom_content/images/products.jpg'" alt="">
+        </a>
+    </div>
+
+    <div class="col-md-3 col-sm-6 mb-4">
+        <a href="#">
+            <img class="img-fluid" src="../custom_public/uploads/products/product->pname/images/product->pname2.jpg" onerror="this.src = '../../Content/custom_content/images/products.jpg'" alt="">
+        </a>
+    </div>
+
+    <div class="col-md-3 col-sm-6 mb-4">
+        <a href="#">
+            <img class="img-fluid" src="../custom_public/uploads/products/product->pname}}/images/product->pname3.jpg" onerror="this.src = '../../Content/custom_content/images/products.jpg'" alt="">
+        </a>
+    </div>
+
+    <div class="col-md-3 col-sm-6 mb-4">
+        <a href="#">
+            <img class="img-fluid" src="../custom_public/uploads/products/product->pname/images/product->pname4.jpg" onerror="this.src = '../../Content/custom_content/images/products.jpg'" alt="">
+        </a>
+    </div>
+
+</div>
+<!-- /.row -->
+
+@section Scripts {
+    <!-- Bootstrap core JavaScript-->
+    <!-- Core plugin JavaScript-->
+    @Scripts.Render("~/Scripts/custom_scripts/vendor/jquery-easing/jquery.easing.min.js")
+    @* <script src="asset('custom_public/vendor/jquery-easing/jquery.easing.min.js')"></script> *@
+
+    <!-- Custom plugin JavaScript-->
+
+    @Scripts.Render("~/Scripts/custom_scripts/addtocart.js")
+    @* <script src="asset('custom_public/addtocart.js')"></script> *@
+
+    @if (TempData["usr_msg"] != null)
+    {
+        if (TempData["usr_msg"].ToString() != "")
+        {
+            <script type="text/javascript">
+                  alert( "@(TempData["usr_msg"])");
+            </script>
+        }
+    }
+
+    @if (TempData["msg"] != null)
+    {
+        if (TempData["msg"].ToString() != "")
+        {
+            <script type="text/javascript">
+                  alert( "@(TempData["msg"])");
+            </script>
+        }
+    }
+
+    <script type="text/javascript">
+
+        //alert("User Product view: hello mzs");
+
+        setTimeout(function () {
+            $('.mzs-alert-div').fadeOut('slow'); //fast
+        }, 5000);
+    </script>
+}
+

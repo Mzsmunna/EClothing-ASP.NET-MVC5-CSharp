@@ -1,0 +1,13 @@
+﻿@* @using MVCEClothing.Models; *@
+@model List<MVCEClothing.Models.User>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Test Index: DB Created!!</h2>
+@foreach(var user in Model)
+{
+    <h4> @user.Username </h4>
+}
+

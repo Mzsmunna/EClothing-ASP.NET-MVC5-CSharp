@@ -1,0 +1,623 @@
+﻿@model List<MVCEClothing.Models.Product>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@section Style {
+    <!-- Bootstrap core CSS-->
+    <!-- Custom styles for this template-->
+    @*<link href="asset('custom_public/css/sb-admin.css')" rel="stylesheet">*@
+    @Styles.Render("~/Content/custom_content/vendor/Linearicons-Free-v1.0.0/icon-font.min.css")
+}
+
+<div class="container" style="padding-top: 70px;">
+
+    <div class="row my-2">
+        <div class="col-lg-8 order-lg-2">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a href="" data-target="#home" data-toggle="tab" class="nav-link  active">All Products</a>
+                </li>
+                <li class="nav-item">
+                    <a href="" data-target="#user" data-toggle="tab" class="nav-link">All Users</a>
+                </li>
+                <li class="nav-item">
+                    <a href="" data-target="#purchase" data-toggle="tab" class="nav-link">All Purchases</a>
+                </li>
+                <li class="nav-item">
+                    <a href="" data-target="#addproduct" data-toggle="tab" class="nav-link">Add Product</a>
+                </li>
+                <li class="nav-item">
+                    <a href="" data-target="#addadmin" data-toggle="tab" class="nav-link">Add Admin</a>
+                </li>
+                <li class="nav-item">
+                    <a href="" data-target="#profile" data-toggle="tab" class="nav-link">Admin Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a href="" data-target="#editadmin" data-toggle="tab" class="nav-link">Edit Admin Info</a>
+                </li>
+            </ul>
+            <div class="tab-content py-4">
+
+                <div class="tab-pane  active" id="home">
+
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Product Id</th>
+                                    <th>Product Name</th>
+                                    <th>Product For</th>
+                                    <th>Product Category</th>
+                                    <th>Size Available</th>
+                                    <th>Available Quantity</th>
+                                    <th>Product Price</th>
+                                    <th>Manufecture Cost</th>
+                                    <th>Product Offer</th>
+                                </tr>
+                            </thead>
+                            <tbody id="items">
+                                @foreach (var product in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="btn-group btn-group-justified">
+                                                <a class="btn btn-success btn-sm" href="/Admin/EditProduct/@product.Pid">Edit</a>
+                                                <form action="/Admin/DeleteProduct/@product.Pid" method="post" id="delete-product">
+                                                    <button type="button" class="btn btn-danger btn-sm dropdown-toggle ml-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Delete</button>
+                                                    <div class="dropdown-menu">
+                                                        <input class="dropdown-item" type="submit" value="Yes" name="Yes" />
+                                                        <div class="dropdown-divider"></div>
+                                                        <a class="dropdown-item" href="#">No</a>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </td>
+                                        <td> @product.Pid </td>
+                                        <td> @product.Itemname </td>
+                                        <td> @product.Itemfor </td>
+                                        <td> @product.Category </td>
+                                        <td> @product.Sizes </td>
+                                        <td> @product.Available </td>
+                                        <td> @product.Price @product.Currency </td>
+                                        <td> @product.Cost @product.Currency </td>
+                                        <td> @product.Offer %</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-4 col-md-offset-4 text-center">
+                                <ul class="pagination" id="myPager"></ul>
+                            </div>
+                        </div>
+                    </div><!--/table-resp-->
+
+                    <hr />
+
+                </div><!--/tab-pane-->
+
+                <div class="tab-pane" id="user">
+
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>User Id</th>
+                                    <th>Username</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Gender</th>
+                                    <th>Phone Number</th>
+                                    <th>Email</th>
+                                    <th>Address</th>
+                                    <th>Usertype</th>
+                                </tr>
+                            </thead>
+                            <tbody id="items">
+                                @foreach (var user in ViewBag.Users)
+                                {
+                                    <tr>
+                                        <td> @user.Id </td>
+                                        <td> @user.Username </td>
+                                        <td> @user.Firstname </td>
+                                        <td> @user.Lastname </td>
+                                        <td> @user.Gender </td>
+                                        <td> @user.Phonenumber </td>
+                                        <td> @user.Email </td>
+                                        <td> @user.address </td>
+                                        <td> @user.Usertype </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-4 col-md-offset-4 text-center">
+                                <ul class="pagination" id="myPager"></ul>
+                            </div>
+                        </div>
+                    </div><!--/table-resp-->
+
+                    <hr />
+
+                </div><!--/tab-pane-->
+
+                <div class="tab-pane" id="purchase">
+
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Purchase Id</th>
+                                    <th>Product Id</th>
+                                    <th>Product Name</th>
+                                    <th>Product For</th>
+                                    <th>Product Category</th>
+                                    <th>Product Size</th>
+                                    <th>Product Price /Item</th>
+                                    <th>Product Cost /Item</th>
+                                    <th>Product Discount (%)</th>
+                                    <th>Purchased by</th>
+                                    <th>Purchaser Phone Number</th>
+                                    <th>Purchaser Address</th>
+                                    <th>Quantity Bought</th>
+                                    <th>Total Price</th>
+                                    <th>Date of Bought</th>
+                                </tr>
+                            </thead>
+                            <tbody id="items">
+                                @foreach (var purchase in ViewBag.Purchases)
+                                {
+                                    <tr>
+                                        <td> @purchase.Prid </td>
+                                        <td> @purchase.Pid </td>
+                                        <td> @purchase.Itemname </td>
+                                        <td> @purchase.Itemfor </td>
+                                        <td> @purchase.Category </td>
+                                        <td> @purchase.Sizes </td>
+                                        <td> @purchase.Price @purchase.Currency</td>
+                                        <td> @purchase.Cost @purchase.Currency</td>
+                                        <td> @purchase.Offer %</td>
+                                        <td> @purchase.Purchasedby </td>
+                                        <td> @purchase.Phonenumber </td>
+                                        <td> @purchase.address </td>
+                                        <td> @purchase.Quantity </td>
+                                        <td> @purchase.TotalPrice </td>
+                                        <td> @purchase.PurchaseDate </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-4 col-md-offset-4 text-center">
+                                <ul class="pagination" id="myPager"></ul>
+                            </div>
+                        </div>
+                    </div><!--/table-resp-->
+
+                    <hr />
+
+                </div><!--/tab-pane-->
+
+                <div class="tab-pane" id="addproduct">
+
+                    <div class="container">
+                        <div class="card card-register mx-auto mt-5 pt-md-2">
+                            <div class="card-header"><strong>@ViewBag.Action Product : @ViewBag.PID</strong></div>
+                            <div class="card-body">
+                                <form method="post" action="/Admin/ProductAdded" enctype="multipart/form-data" id="add-update-product">
+                                    <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                                    <div class="form-group">
+                                        <div class="form-row">
+                                            <div class="col-md-6">
+                                                <label for="pname">Product Name:</label>
+                                                <input class="form-control" id="pname" type="text" aria-describedby="nameHelp" placeholder="Enter Poduct name" name="pname" value="@Session["add_pname"]">
+                                                @if (Session["itemEXT"] != null)
+                                                {
+                                                    <small id="itemEXT" class="text-danger">@Session["itemEXT"]</small>
+                                                }
+                                                <small id="pnameHelp" class="text-danger"></small>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="size">Size:</label>
+                                                <div class="form-control" id="size">
+                                                    <input type="checkbox" name="XS" value="XS"> XS
+                                                    <input type="checkbox" name="S" value="S"> S
+                                                    <input type="checkbox" name="M" value="M"> M
+                                                    <input type="checkbox" name="L" value="L"> L
+                                                    <input type="checkbox" name="XL" value="XL"> XL
+                                                    <input type="checkbox" name="XXL" value="XXL"> XXL
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="available">Product Quantity:</label>
+                                                <input class="form-control" id="available" type="number" aria-describedby="nameHelp" placeholder="Enter Quantity" name="available" min="1" value="@Session["add_available"]">
+                                                <small id="availableHelp" class="text-danger"></small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-row">
+                                            <div class="col-md-4">
+                                                <label for="pfor">Product For:</label>
+                                                <select class="form-control" id="pfor" name="pfor">
+                                                    <option value="@Session["add_pfor"]">@Session["add_pfor"]</option>
+                                                    <option value="Men">Men</option>
+                                                    <option value="Women">Women</option>
+                                                    <option value="Child">Child</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="category">Available Category :</label>
+                                                <select class="form-control" id="category" name="category">
+                                                    <option value="@Session["add_category"]">@Session["add_category"]</option>
+                                                    <option value="T-Shirt">T-Shirt</option>
+                                                    <option value="Shirt">Shirt</option>
+                                                    <option value="Panjabi">Panjabi</option>
+                                                    <option value="Shari">Shari</option>
+                                                    <option value="Kurti">Kurti</option>
+                                                    <option value="Jeans">Jeans</option>
+                                                    <option value="Salwar">Salwar</option>
+                                                    <option value="Blezzer">Blezzer</option>
+                                                    <option value="Jacket">Jacket</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="currency">Currency:</label>
+                                                <select class="form-control" id="currency" name="currency">
+                                                    <option value="@Session["add_currency"]">@Session["add_currency"]</option>
+                                                    <option value="Taka">Taka</option>
+                                                    <option value="$">$</option>
+                                                    <option value="Euro">Euro</option>
+                                                    <option value="Rupee">Rupee</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-row">
+                                            <div class="col-md-4">
+                                                <label for="price">Product Price:</label>
+                                                <input class="form-control" id="price" type="number" aria-describedby="nameHelp" placeholder="in number" name="price" min="0" value="@Session["add_price"]">
+                                                <small id="priceHelp" class="text-danger"></small>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="cost">Manufecture Cost:</label>
+                                                <input class="form-control" id="cost" type="number" aria-describedby="nameHelp" placeholder="in number" name="cost" min="0" value="@Session["add_cost"]">
+                                                <small id="costHelp" class="text-danger"></small>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="offer">Offer:</label>
+                                                <input class="form-control" id="offer" type="number" aria-describedby="nameHelp" placeholder="in %" name="offer" min="0" value="@Session["add_offer"]">
+                                                <small id="offerHelp" class="text-danger"></small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-row">
+                                            <!--<div class="col-md-6">
+                                                <label for="productpics">Upload Pic:</label>
+                                                <input class="form-control" id="productpics" type="file" multiple="multiple" name="productpics[]">
+                                            </div>-->
+                                        </div>
+                                        <small id="productpicsHelp" class="text-danger"></small>
+                                    </div>
+                                    <!--<a class="btn btn-primary btn-block" href="/registration">Register</a>-->
+                                    <input class="btn btn-primary btn-block" type="submit" value="Add Product" />
+                                </form>
+                                <div class="text-center">
+                                    <a class="d-block small mt-3" href="/Admin">Go back to Admin Page</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="tab-pane" id="addadmin">
+                    <form method="post" action="/Register/Registered" enctype="multipart/form-data" id="register">
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-md-12">
+                                    <label for="username">Username</label>
+                                    <input class="form-control" id="username" type="text" aria-describedby="nameHelp" placeholder="Enter Username" name="username" value="@(Session["r_username"])">
+                                    @if (Session["userEXT"] != null)
+                                    {
+                                        <small id="userEXT" class="text-danger">@Session["userEXT"]</small>
+                                    }
+                                    <small id="usernameHelp" class="text-danger"></small>
+                                </div>
+                                <div class="col-md-6 mt-3">
+                                    <label for="firstname">First name</label>
+                                    <input class="form-control" id="firstname" type="text" aria-describedby="nameHelp" placeholder="Enter first name" name="firstname" value="@(Session["r_firstname"])">
+                                    <small id="firstnameHelp" class="text-danger"></small>
+                                </div>
+                                <div class="col-md-6 mt-3">
+                                    <label for="lastname">Last name</label>
+                                    <input class="form-control" id="lastname" type="text" aria-describedby="nameHelp" placeholder="Enter last name" name="lastname" value="@(Session["r_lastname"])">
+                                    <small id="lastnameHelp" class="text-danger"></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <label for="gender">Gender:</label>
+                                    <select class="form-control" id="gender" name="gender">
+                                        <option value="@(Session["r_gender"])">@(Session["r_gender"])</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="DOB">Date of Birth</label>
+                                    <input class="form-control" id="DOB" type="date" placeholder="Your Birth Date" name="DOB" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <label for="email">Email address</label>
+                                    <input class="form-control" id="email" type="email" aria-describedby="emailHelp" placeholder="Enter email" name="email" value="@(Session["r_email"])">
+                                    @if (Session["emailEXT"] != null)
+                                    {
+                                        <small id="emailEXT" class="text-danger">Session["emailEXT"]</small>
+                                    }
+                                    <small id="emailHelp" class="text-danger"></small>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="pnumber">Phone Number</label>
+                                    <input class="form-control" id="pnumber" type="text" aria-describedby="phoneHelp" placeholder="Enter phone number" name="pnumber" value="@(Session["r_pnumber"])">
+                                    <small id="pnumberHelp" class="text-danger"></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <label for="password">Password</label>
+                                    <input class="form-control" id="password" type="password" placeholder="Password" name="password">
+                                    <small id="passwordHelp" class="text-danger"></small>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="cpassword">Confirm password</label>
+                                    <input class="form-control" id="cpassword" type="password" placeholder="Confirm password" name="cpassword">
+                                    <small id="cpasswordHelp" class="text-danger"></small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <label for="address">Address</label>
+                                    <input class="form-control" id="address" type="text" placeholder="i.e: House# 7, Road No# 1, Block# B, Niketon" name="address" value="@(Session["r_address"])">
+                                </div>
+                                <!--<div class="col-md-6">
+                                    <label for="profilepic">Profile Pic</label>
+                                    <input class="form-control" id="profilepic" type="file" name="profilepic">
+                                </div>-->
+                                <small id="profilepicHelp" class="text-danger"></small>
+                            </div>
+                        </div>
+                        <!--<a class="btn btn-primary btn-block" href="/registration">Register</a>-->
+                        <input type="hidden" name="usertype" value="Admin" />
+                        <input class="btn btn-primary btn-block" type="submit" value="Add Admin" />
+                    </form>
+
+                    <!--<a class="btn btn-primary btn-block" href="/registration">Register</a>-->
+                    <!--<input type="hidden" name="acctype" value="admin" />-->
+                    <!--<input class="btn btn-primary btn-block" type="submit" value="Add Admin" />-->
+                    <!--<button type="button" class="btn btn-primary btn-block" onclick="AddAdmin()">Add New Admin</button>-->
+
+                </div>
+
+                <div class="tab-pane" id="profile">
+                    <h5 class="text-capitalize mb-3">(@Session["usertype"]) @Session["username"]'s Profile</h5>
+                    <div class="row">
+                        <div class="col-md-6 text-capitalize">
+
+                            <h6>About</h6>
+                            <p>
+                                @Session["usertype"]'s Full Name : @Session["firstname"] @Session["lastname"]
+                            </p>
+                            <p>
+                                Gender : @Session["gender"]
+                            </p>
+                            <p>
+                                Email : @Session["email"]
+                            </p>
+                            <p>
+                                Phone Number : @Session["pnumber"]
+                            </p>
+                            <p>
+                                Address : @Session["address"]
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <hr />
+                            <span class="badge badge-primary"><i class="fa fa-user"></i> @Session["username"]</span>
+                            <span class="badge badge-success"><i class="fa fa-cog"></i> @Session["firstname"]</span>
+                            <span class="badge badge-danger"><i class="fa fa-eye"></i> @Session["lastname"]</span>
+                            <span class="badge badge-secondary"><i class="fa fa-eye"></i> @Session["usertype"]</span>
+                        </div>
+                        <!--<div class="col-md-12">
+                            <h5 class="mt-2"><span class="fa fa-clock-o ion-clock float-right"></span> Recent Activity</h5>
+                            <table class="table table-sm table-hover table-striped">
+                                <tbody>
+                                    <tr>
+                                       <td>
+                                           <a href="/cloth/activity->notify_forid">activity->notify_dtls
+                                           <span class="pull-right small text-muted">activity->notify_date activity->notify_time </span></a>
+                                       </td>
+                                       <td>
+                                           <strong>John</strong> deleted My Board1 in <strong>`Discussions`</strong>
+                                       </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>-->
+                    </div>
+                    <!--/row-->
+                </div>
+
+                <div class="tab-pane" id="editadmin">
+                    <div class="container">
+                        <div class="card card-register mx-auto mt-5 pt-md-2">
+                            <div class="card-header"><strong>Edit Admin Info</strong></div>
+                            <div class="card-body">
+                                <form method="post" action="/Admin/UpdateAdmin/@Session["uid"]" enctype="multipart/form-data" id="register">
+                                    <div class="form-group">
+                                        <div class="form-row">
+                                            <div class="col-md-12">
+                                                <label for="username">Admin Username</label>
+                                                <input class="form-control" id="username" type="text" aria-describedby="nameHelp" placeholder="Enter Username" name="username" value="@Session["username"]" readonly>
+                                                @if (Session["userEXT"] != null)
+                                                {
+                                                    <small id="userEXT" class="text-danger">(Session["userEXT"]</small>
+                                                }
+                                                <small id="usernameHelp" class="text-danger"></small>
+                                            </div>
+                                            <div class="col-md-6 mt-3">
+                                                <label for="firstname">First name</label>
+                                                <input class="form-control" id="firstname" type="text" aria-describedby="nameHelp" placeholder="Enter first name" name="firstname" value="@Session["firstname"]">
+                                                <small id="firstnameHelp" class="text-danger"></small>
+                                            </div>
+                                            <div class="col-md-6 mt-3">
+                                                <label for="lastname">Last name</label>
+                                                <input class="form-control" id="lastname" type="text" aria-describedby="nameHelp" placeholder="Enter last name" name="lastname" value="@Session["lastname"]">
+                                                <small id="lastnameHelp" class="text-danger"></small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-row">
+                                            <div class="col-md-6">
+                                                <label for="gender">Gender:</label>
+                                                <select class="form-control" id="gender" name="gender">
+                                                    <option value="@Session["gender"]">@Session["gender"]</option>
+                                                    <option value="Male">Male</option>
+                                                    <option value="Female">Female</option>
+                                                    <option value="other">Other</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="DOB">Date of Birth</label>
+                                                <input class="form-control" id="DOB" type="date" placeholder="Your Birth Date" name="DOB" value="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-row">
+                                            <div class="col-md-6">
+                                                <label for="email">Email address</label>
+                                                <input class="form-control" id="email" type="email" aria-describedby="emailHelp" placeholder="Enter email" name="email" value="@Session["email"]">
+                                                @if (Session["emailEXT"] != null)
+                                                {
+                                                    <small id="emailEXT" class="text-danger">Session["emailEXT"]</small>
+                                                }
+                                                <small id="emailHelp" class="text-danger"></small>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="pnumber">Phone Number</label>
+                                                <input class="form-control" id="pnumber" type="text" aria-describedby="phoneHelp" placeholder="Enter phone number" name="pnumber" value="@Session["pnumber"]">
+                                                <small id="pnumberHelp" class="text-danger"></small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-row">
+                                            <div class="col-md-6">
+                                                <label for="password">Password</label>
+                                                <input class="form-control" id="password" type="password" placeholder="Password" name="password" value="@Session["password"]">
+                                                <small id="passwordHelp" class="text-danger"></small>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="cpassword">Confirm password</label>
+                                                <input class="form-control" id="cpassword" type="password" placeholder="Confirm password" name="cpassword">
+                                                <small id="cpasswordHelp" class="text-danger"></small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="form-row">
+                                            <div class="col-md-6">
+                                                <label for="address">Address</label>
+                                                <input class="form-control" id="address" type="text" placeholder="i.e: House# 7, Road No# 1, Block# B, Niketon" name="address" value="@Session["address"]">
+                                            </div>
+                                            <!--<div class="col-md-6">
+                                                <label for="profilepic">Profile Pic</label>
+                                                <input class="form-control" id="profilepic" type="file" name="profilepic">
+                                            </div>
+                                            <small id="profilepicHelp" class="text-danger"></small>-->
+                                        </div>
+                                    </div>
+                                    <!--<a class="btn btn-primary btn-block" href="/registration">Register</a>-->
+                                    <input type="hidden" name="usertype" value="Admin" />
+                                    <input class="btn btn-primary btn-block" type="submit" value="Update Info" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--<a class="btn btn-primary btn-block" href="/registration">Register</a>-->
+                    <!--<input type="hidden" id="aid" name="aid" value="<%=Session[" id"] %>" />-->
+                    <!--<input class="btn btn-primary btn-block" type="submit" value="Update Info" />-->
+                    <!--<button type="button" class="btn btn-primary btn-block" onclick="EditAdmin()">Update Admin Info!</button>-->
+                    <!--</form>-->
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 order-lg-1 text-center">
+            <div class="card mb-2" style="width: 22rem;">
+                <!--<img class="card-img-top" src="/custom_public/uploads/users/user[0]->username}}/profilepic/$user[0]->username.jpg" onerror="this.src = '/custom_public/images/user.png'" alt="Card image cap">-->
+                <div class="card-header text-muted">
+                    <span class="text-capitalize">@Session["username"] (@Session["usertype"])</span>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">@Session["firstname"] @Session["lastname"]</p>
+                    <p class="card-text">@Session["email"]</p>
+                    <p class="card-text">@Session["pnumber"]</p>
+                </div>
+                <div class="card-footer">
+                    <div class="input-group">
+                        <form action="/user/change-profilepic" method="post" id="logout">
+                            <div class="btn-group" role="group" aria-label="First group">
+                                <a class="btn btn-primary btn-block" href="/Admin/AddProduct">Add Product</a>
+                                <!--<input type="submit" class="input-group-text p-2" name="logout" value="Logout" />-->
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (TempData["adm_msg"] != null)
+{
+    if (TempData["adm_msg"].ToString() != "")
+    {
+        <script type="text/javascript">
+                  alert( "@(TempData["adm_msg"])");
+        </script>
+    }
+}
+
+@if (TempData["msg"] != null)
+{
+    if (TempData["msg"].ToString() != "")
+    {
+        <script type="text/javascript">
+                  alert( "@(TempData["msg"])");
+        </script>
+    }
+}
