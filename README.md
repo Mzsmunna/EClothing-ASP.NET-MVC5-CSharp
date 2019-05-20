@@ -9,6 +9,7 @@ To run this Project on your PC make sure you are using Microsoft Windows OS. And
 
 # Demo-Data
 admin username : admin, password : admin
+
 customer username : mzs, password : 123
 
 # Demo View
