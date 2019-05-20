@@ -6,3 +6,10 @@ MVC5 has been used in this Project. And Code First approach has been followed to
 ORM pattern has been followed as well. There has been used Entity Framework along with LINQ.
 
 To run this Project on your PC make sure you are using Microsoft Windows OS. And you need Visual Studio 2013 oe higher along with 4.5 .NET Version or higher.
+
+# Demo-Data
+admin username : admin, password : admin
+customer username : mzs, password : 123
+
+# Demo View
+<img src="demo/EClothing-CSharp.gif" title="shondhan.com"/>
